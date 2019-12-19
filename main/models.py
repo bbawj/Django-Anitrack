@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 class AnimeInfo(models.Model):
     title = models.CharField(max_length=50)
@@ -25,6 +26,6 @@ class AnimeInfo(models.Model):
             anime = AnimeInfo.objects.get(title=self.title)
             self.id = anime.id
             super().save(*args, **kwargs, update_fields=["latest_ep_num","ld","sd","hd","fhd"])
-            
-        except AnimeInfo.DoesNotExist:
+
+        except ObjectDoesNotExist:
             super().save(*args, **kwargs)
