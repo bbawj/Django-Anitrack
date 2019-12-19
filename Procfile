@@ -1,2 +1,2 @@
 web: gunicorn django_anitrack.wsgi
-clock: python tasks.py
+clock: python main.tasks.py
