@@ -1,0 +1,109 @@
+{% extends "main/main.html" %}
+{% load static %}
+{%  block content %}
+<div class="album py-5 bg-light">
+  <div class="container">
+  <h2 class="text-center .mt-0">Search Results</h2>
+    <div class="row">
+      {% for anime in ai %}
+      <div class="col-md-4 mt-3">
+        <div class="card mb-8 shadow-sm h-100">
+          <div class="embed-responsive embed-responsive-16by9">
+            <img src ="{% get_static_prefix %}main/{{anime.title}}.jpg" class="card-img-top embed-responsive-item" alt="Responsive image">
+          </div>
+            <div class="card-body">
+              <h5 class="card-title">{{anime.title}}</h5>
+              <h6 class="card-subtitle mb-2">Current EP: {{anime.latest_ep_num}}</h6>
+              <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group" aria-label="first group">
+                  {% if anime.ld %}
+                  <button type="button" class="btn btn-sm btn-success">360p</button>
+                  {% else %}
+                  <button type="button" class="btn btn-sm btn-danger">360p</button>
+                  {% endif %}
+                  {% if anime.sd %}
+                  <button type="button" class="btn btn-sm btn-success">480p</button>
+                  {% else %}
+                  <button type="button" class="btn btn-sm btn-danger">480p</button>
+                  {% endif %}
+                  {% if anime.hd %}
+                  <button type="button" class="btn btn-sm btn-success">720p</button>
+                  {% else %}
+                  <button type="button" class="btn btn-sm btn-danger">720p</button>
+                  {% endif %}
+                  {% if anime.fhd %}
+                  <button type="button" class="btn btn-sm btn-success">1080p</button>
+                  {% else %}
+                  <button type="button" class="btn btn-sm btn-danger">1080p</button>
+                  {% endif %}
+                </div>
+                {% if user.is_authenticated %}
+                <div class="btn-group" aria-label="second group">
+                  <div class="dropdown">
+                    <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Follow
+                    </button>
+                    <div class="dropdown-menu" id ="dropdown_{{ forloop.counter}}" aria-labelledby="dropdownMenuButton">
+                      {% if anime.id in following.following_ld_list %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_ld'%}" value="{{anime.id}}">Unfollow 360p</button>
+                      {% else %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_ld'%}" value="{{anime.id}}">Follow 360p</button>
+                      {% endif %}
+
+                      {% if anime.id in following.following_sd_list %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_sd'%}" value="{{anime.id}}">Unfollow 480p</button>
+                      {% else %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_sd'%}" value="{{anime.id}}">Follow 480p</button>
+                      {% endif %}
+                      {% if anime.id in following.following_hd_list %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_hd'%}" value="{{anime.id}}">Unfollow 720p</button>
+                      {% else %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_hd'%}" value="{{anime.id}}">Follow 720p</button>
+                      {% endif %}
+                      {% if anime.id in following.following_fhd_list %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_fhd'%}" value="{{anime.id}}">Unfollow 1080p</button>
+                      {% else %}
+                        <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_fhd'%}" value="{{anime.id}}">Follow 1080p</button>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function(event){
+    $(".follow-btn").click(function(event){
+      event.preventDefault();
+      var div_id = "#" + $(this).parent().attr('id');
+      var pk = $(this).attr('value');
+      var followurl = $(this).attr('data-href');
+       $.ajax({
+        type: "POST",
+        url: followurl,
+        data: {'id':pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success:function(response) {
+          location.reload(true);
+          //history.go(0);
+          //$(div_id).load(" "+div_id+ " > *");
+               //do something with 'response'
+          },
+        //$(div_id).load(location.href +div_id+">*",""),
+
+        });
+      //$(div_id).load(window.location.href +div_id+">*","");
+
+     });
+
+});
+
+</script>
+{% endblock javascript %}
+{% endblock content %}

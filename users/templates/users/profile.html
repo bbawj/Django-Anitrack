@@ -1,0 +1,79 @@
+{% extends "main/main.html" %}
+{% load crispy_forms_tags %}
+{%  block content %}
+<div class="container">
+  <div class="content-section">
+    <div class="media">
+      <div class="media-body">
+        <p class="h2 mt-5">{{ user.username }}</p>
+        <p class="font-weight-light">{{ user.email }}</p>
+
+      </div>
+    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="true">Followed Anime</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Update Profile</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="following" role="tabpanel" aria-labelledby="following-tab">
+        {% for a in anime %}
+        <div class="d-flex justify-content-between align-items-center">
+          {{ a.title }}
+          <div class="dropdown">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Follow
+            </button>
+
+
+            <div class="dropdown-menu" id ="dropdown_{{ forloop.counter}}" aria-labelledby="dropdownMenuButton">
+              {% if a.id in following.following_ld_list %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_ld'%}" value="{{a.id}}">Unfollow 360p</button>
+              {% else %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_ld'%}" value="{{a.id}}">Follow 360p</button>
+              {% endif %}
+
+              {% if a.id in following.following_sd_list %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_sd'%}" value="{{a.id}}">Unfollow 480p</button>
+              {% else %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_sd'%}" value="{{a.id}}">Follow 480p</button>
+              {% endif %}
+              {% if a.id in following.following_hd_list %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_hd'%}" value="{{a.id}}">Unfollow 720p</button>
+              {% else %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_hd'%}" value="{{a.id}}">Follow 720p</button>
+              {% endif %}
+              {% if a.id in following.following_fhd_list %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_fhd'%}" value="{{a.id}}">Unfollow 1080p</button>
+              {% else %}
+                <button class="follow-btn dropdown-item" type="submit" data-href="{% url 'main:main-following_fhd'%}" value="{{a.id}}">Follow 1080p</button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4">My Profile</legend>
+            {{ u_form|crispy }}
+          </fieldset>
+          <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit">Update</button>
+          </div>
+        </form>
+        <a href="{% url 'password_reset' %}">Forgot your password?</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>document.querySelector(".clearablefileinput").className += "-file"</script>
+{% endblock content %}
