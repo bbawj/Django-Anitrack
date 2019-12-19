@@ -4,9 +4,11 @@ beautifulsoup4==4.8.1
 certifi==2019.11.28
 cfscrape==2.0.8
 chardet==3.0.4
+dj-database-url==0.5.0
 Django==3.0
 django-apscheduler==0.3.0
 django-crispy-forms==1.8.1
+django-heroku==0.3.1
 django-sendgrid-v5==0.8.1
 django-timezone-field==4.0
 future==0.18.2
@@ -16,6 +18,7 @@ horrible-downloader==1.0.4
 idna==2.8
 lxml==4.4.2
 nodejs==0.1.1
+psycopg2==2.8.4
 python-crontab==2.4.0
 python-dateutil==2.8.1
 python-http-client==3.2.1
@@ -30,3 +33,4 @@ sqlparse==0.3.0
 sty==1.0.0b12
 tzlocal==2.0.0
 urllib3==1.25.7
+whitenoise==5.0.1
