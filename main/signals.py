@@ -11,7 +11,7 @@ def my_handler(sender, instance, **kwargs):
     try:
         obj = sender.objects.get(id = instance.id)
     except AnimeInfo.DoesNotExist:
-        return none
+        return None
 
 
     if float(obj.latest_ep_num) < float(instance.latest_ep_num):
