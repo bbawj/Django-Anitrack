@@ -1,13 +1,16 @@
+import django
+django.setup()
+
 from main.script import get_anime_info
 from main.models import AnimeInfo
 import logging
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 from apscheduler.schedulers.background import BackgroundScheduler
 
+
 logger = logging.getLogger(__name__)
 scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), "default")
-
 
 
 @register_job(scheduler, "interval", minutes=10, id="new_job", replace_existing=True, max_instances = 1, coalesce=True)
