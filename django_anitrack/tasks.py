@@ -13,7 +13,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), "default")
 
 
-@scheduler.scheduled_job(scheduler, "interval", minutes=10, id="new_job", replace_existing=True, max_instances = 1, coalesce=True)
+@scheduler.scheduled_job(scheduler, "interval", minutes=10, id="new_job", max_instances = 1, coalesce=True)
 def update_database():
 
     real_title = []
