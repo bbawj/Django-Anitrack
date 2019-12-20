@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), "default")
 
-
-@scheduler.scheduled_job("interval", minutes=10, id="new_job", max_instances = 1, coalesce=True)
 def update_database():
 
     real_title = []
