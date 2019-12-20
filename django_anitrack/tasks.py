@@ -46,5 +46,8 @@ def update_database():
             else:
                 pass
 
+if __name__ == '__main__':
+    scheduler.add_job(update_database, "interval", minutes=10, id="new_job", max_instances = 1, coalesce=True)
+
 scheduler.start()
 print("Scheduler started!")
