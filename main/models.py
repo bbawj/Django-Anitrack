@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
 class AnimeInfo(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
     latest_ep_num = models.FloatField()
     ld = models.BooleanField()
     sd = models.BooleanField()
