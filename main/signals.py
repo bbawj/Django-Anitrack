@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 def my_handler(sender, instance, **kwargs):
     try:
         obj = sender.objects.get(id = instance.id)
-    except AnimeInfo.DoesNotExist():
+    except AnimeInfo.DoesNotExist:
         return none
 
 
