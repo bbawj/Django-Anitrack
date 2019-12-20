@@ -46,8 +46,5 @@ def update_database():
             else:
                 pass
 
-    scheduler.start()
-    print("Scheduler started!")
-
-if __name__ == '__main__':
-    update_database()
+scheduler.start()
+print("Scheduler started!")
