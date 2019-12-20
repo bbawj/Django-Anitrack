@@ -6,10 +6,7 @@ from main.models import AnimeInfo
 import logging
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 from apscheduler.schedulers.background import BackgroundScheduler
-from rq import Queue
-from worker import conn
 
-q = Queue(connection=conn)
 
 logger = logging.getLogger(__name__)
 scheduler = BackgroundScheduler()
@@ -49,6 +46,8 @@ def update_database():
             else:
                 pass
 
-scheduler.start()
-print("Scheduler started!")
-result = q.enqueue(update_database, 'http://heroku.com')
+    scheduler.start()
+    print("Scheduler started!")
+
+if __name__ == '__main__':
+    update_database()
