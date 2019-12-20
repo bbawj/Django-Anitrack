@@ -10,8 +10,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 logger = logging.getLogger(__name__)
 scheduler = BackgroundScheduler()
-scheduler.add_jobstore(DjangoJobStore(), "default")
 
+@scheduler.scheduled_job("interval", minutes=10, id="new_job", max_instances = 1, coalesce=True)
 def update_database():
 
     real_title = []
@@ -44,8 +44,6 @@ def update_database():
             else:
                 pass
 
-if __name__ == '__main__':
-    scheduler.add_job(update_database, "interval", minutes=10, id="new_job", max_instances = 1, coalesce=True)
 
 scheduler.start()
 print("Scheduler started!")
