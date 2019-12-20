@@ -35,7 +35,6 @@ def update_database():
             b = next(item for item in anime_list if item["title"] == t)
             a1 = AnimeInfo(title=t, latest_ep_num=b["latest_ep_num"], ld=b["ld"], sd=b["sd"],hd=b["hd"],fhd=b["fhd"])
             a1.save()
-            print(anime_list)
 
         for t in data_title:   #testing if there are any old titles to delete
             if t not in real_title:
