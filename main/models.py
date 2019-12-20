@@ -27,5 +27,5 @@ class AnimeInfo(models.Model):
             self.id = anime.id
             super().save(*args, **kwargs, update_fields=["latest_ep_num","ld","sd","hd","fhd"])
 
-        except anime.DoesNotExist:
+        except AnimeInfo.DoesNotExist:
             super().save(*args, **kwargs)
