@@ -17,7 +17,7 @@ fuzzywuzzy==0.17.0
 gunicorn==20.0.4
 horrible-downloader==1.0.4
 idna==2.8
-lxml==4.4.2
+lxml==4.6.2
 nodejs==0.1.1
 psycopg2==2.8.4
 python-crontab==2.4.0
